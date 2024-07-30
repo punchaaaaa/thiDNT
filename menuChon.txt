@@ -1,0 +1,469 @@
+main1	main1	main1	main1	main1
+	main.xml	main.xml	main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:orientation="vertical"
+    android:gravity="center_horizontal">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Thong tin dang nhap"
+        android:textSize="35dp"
+        android:gravity="center_horizontal"
+        android:background="#F04781"
+        android:textColor="@color/white"
+        android:padding="10dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="30dp"
+        android:padding="10dp">
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Ma sv:"
+            android:textSize="25dp"
+            android:padding="8dp"/>
+        <EditText
+            android:id="@+id/txtMsv"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:textSize="25dp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Ma lop:"
+            android:textSize="25dp"
+            android:padding="8dp"/>
+        <EditText
+            android:id="@+id/txtMlop"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:textSize="25dp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="30dp"
+        android:gravity="center_horizontal">
+        <Button
+            android:id="@+id/login"
+            android:layout_width="120dp"
+            android:layout_height="60dp"
+            android:text="Login"
+            android:textSize="20dp"/>
+        <Button
+            android:id="@+id/reset"
+            android:layout_width="120dp"
+            android:layout_height="60dp"
+            android:text="Reset"
+            android:textSize="20dp"
+            android:layout_marginLeft="30dp"/>
+    </LinearLayout>
+</LinearLayout>
+
+	main.java	main.java	main.java	main.java
+package com.example.t1;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+
+import java.util.ArrayList;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_main);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+
+        EditText msv = findViewById(R.id.txtMsv);
+        EditText lop = findViewById(R.id.txtMlop);
+
+        Button dangnhap = findViewById(R.id.login);
+        Button reset = findViewById(R.id.reset);
+
+        dangnhap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String user = msv.getText().toString().trim();
+                String pass = lop.getText().toString().trim();
+
+                if(user.isEmpty() && pass.isEmpty()){
+                    Toast.makeText(MainActivity.this, "Vui long nhap thong tin!", Toast.LENGTH_SHORT).show();
+                } else if(user.contains("ma sinh vien") && pass.contains("cnttk15")){
+                    Intent intent = new Intent(MainActivity.this, main2.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(MainActivity.this, "Sai ten dang nhap hoac mat khau!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        reset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                msv.setText("");
+                lop.setText("");
+            }
+        });
+    }
+}
+
+main2	main2	main2	main2	main2	main2
+	main2.xml	main2.xml	main2.xml	main2.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".main2"
+    android:orientation="vertical"
+    android:gravity="center_horizontal">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Danh muc thiet bi"
+        android:textSize="35dp"
+        android:gravity="center_horizontal"
+        android:padding="10dp"
+        android:background="#EB2F6F"
+        android:textColor="@color/white"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="chon thiet bi"
+        android:textSize="20dp"
+        android:gravity="center_horizontal"
+        android:textAllCaps="true"
+        android:layout_marginTop="30dp"/>
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:orientation="vertical">
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="dien thoai"
+            android:textSize="20dp"
+            android:id="@+id/dt"/>
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="may tinh bang"
+            android:textSize="20dp"
+            android:id="@+id/mtb"/>
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="laptop"
+            android:textSize="20dp"
+            android:id="@+id/lt"/>
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="phu kien"
+            android:textSize="20dp"
+            android:id="@+id/pk"/>
+    </RadioGroup>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="chon danh muc"
+        android:textSize="20dp"
+        android:gravity="center_horizontal"
+        android:textAllCaps="true"/>
+    <CheckBox
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/cb1"
+        android:text="Tu lanh"
+        android:textSize="20dp"
+        android:layout_marginLeft="10dp"/>
+    <CheckBox
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/cb2"
+        android:text="Ti vi"
+        android:textSize="20dp"
+        android:layout_marginLeft="10dp"/>
+    <CheckBox
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/cb3"
+        android:text="Dieu hoa"
+        android:textSize="20dp"
+        android:layout_marginLeft="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="20dp">
+        <Button
+            android:id="@+id/btnChon"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:text="Submit"/>
+        <Button
+            android:id="@+id/btnThoat"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:text="Exit"
+            android:layout_marginLeft="20dp"/>
+        <Button
+            android:id="@+id/btnTiep"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:text="Next"
+            android:layout_marginLeft="20dp"/>
+    </LinearLayout>
+</LinearLayout>
+
+main2.java	main2.java	main2.java	main2.java	main2.java
+package com.example.t1;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.RadioButton;
+import android.widget.Toast;
+
+import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+
+public class main2 extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_main2);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+
+        RadioButton rd1 = findViewById(R.id.dt);
+        RadioButton rd2 = findViewById(R.id.mtb);
+        RadioButton rd3 = findViewById(R.id.lt);
+        RadioButton rd4 = findViewById(R.id.pk);
+
+        CheckBox c1 = findViewById(R.id.cb1);
+        CheckBox c2 = findViewById(R.id.cb2);
+        CheckBox c3 = findViewById(R.id.cb3);
+
+        Button chon = findViewById(R.id.btnChon);
+        Button thoat = findViewById(R.id.btnThoat);
+        Button tiep = findViewById(R.id.btnTiep);
+
+        chon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String tb;
+                if(rd1.isChecked()){
+                    tb = "dien thoai";
+                } else if (rd2.isChecked()) {
+                    tb = "may tinh bang";
+                } else if (rd3.isChecked()) {
+                    tb = "laptop";
+                } else if (rd4.isChecked()) {
+                    tb = "phu kien";
+                } else {
+                    tb = "";
+                }
+
+                StringBuilder cb = new StringBuilder();
+
+                if (c1.isChecked()) {
+                    cb.append("tu lanh");
+                }
+                if (c2.isChecked()) {
+                    if (cb.length() > 0) {
+                        cb.append(", ");
+                    }
+                    cb.append("ti vi");
+                }
+                if (c3.isChecked()) {
+                    if (cb.length() > 0) {
+                        cb.append(", ");
+                    }
+                    cb.append("dieu hoa");
+                }
+
+                String result = cb.toString();
+
+                Toast.makeText(main2.this, "Thiet bi: " + tb +"\n Danh muc: " + result, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        thoat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.exit(0);
+            }
+        });
+
+        tiep.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(main2.this, main3.class);
+                startActivity(intent);
+            }
+        });
+    }
+}
+
+main3	main3	main3	main3	main3	main3	main3
+ main3.xml	main3.xml	main3.xml	main3.xml
+	 <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".main3"
+    android:orientation="vertical"
+    android:gravity="center_horizontal">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Hang may tinh"
+        android:textSize="35dp"
+        android:gravity="center_horizontal"
+        android:padding="10dp"
+        android:background="#E73672"
+        android:textColor="@color/white"/>
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="#3F51B5"
+        android:dividerHeight="1dp"
+        android:listSelector="#FFEB3B"
+        android:layout_marginTop="10dp"
+        android:id="@+id/lvHangmt"/>
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:id="@+id/next3"
+        android:text="Next"
+        android:textSize="25dp"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="20dp"/>
+</LinearLayout>
+
+main3.java	main3.java	main3.java	main3.java	main3.java
+package com.example.t1;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+
+import java.util.ArrayList;
+
+public class main3 extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_main3);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+
+        ListView lv = findViewById(R.id.lvHangmt);
+        Button t1 = findViewById(R.id.next3);
+        ArrayList<String> brands;
+
+        brands = new ArrayList<String>();
+        brands.add("Apple");
+        brands.add("Microsoft");
+        brands.add("Lenovo");
+        brands.add("Samsung");
+        brands.add("Dell");
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.item_hangmay, brands);
+        lv.setAdapter(adapter);
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String selec = brands.get(i);
+                Toast.makeText(main3.this, "Da chon: " + selec, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        t1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(main3.this, main4.class);
+                startActivity(intent);
+            }
+        });
+    }
+}
+
+main4	main4	main4	main4	main4	main4
+main4.xml	main4.xml	main4.xml	main4.xml	main4.xml
